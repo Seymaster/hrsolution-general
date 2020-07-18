@@ -21,11 +21,11 @@ exports.postBankacct = (req,res,next)=>{
             });
         }
         else{
-            data = undefined;
+            // console.log(data)
             res.status(200).send({
                 status:200,
                 message: "bank account created successfully",
-                data:data
+                data: data
             });
         }
     }
@@ -33,47 +33,68 @@ exports.postBankacct = (req,res,next)=>{
     );  
 };
 
-exports.getallBankacct = (req,res,next)=>{
-    let page = parseInt(req.query.page) || 1;
-    let limit = (parseInt(req.query.limit) > 100?100:parseInt(req.query.limit)) || 20;
-    let search = req.query.q;
-    let userId = req.user._id;
-    let query = {};
-    query.skip = limit * (page-1);
-    query.limit = limit;
-    let filterCriteria = {created_by: userId};
-    if(search) filterCriteria = {...filterCriteria,name: search};
-    BankacctModel.find(filterCriteria,{},query).exec((err,data) =>{
-        if (err){
-            res.status(500).send({
-                status: 500,
-                message: "An error occured",
-                error: err
-            });
-            return false;
-        }
-        res.status(200).send({
-            status: 200,
-            message: "Bank Account Loaded Successfully",
-            data: data
-        })
-    })
-}
-
-// exports.getAllBankacct = (req,res,next)=>{
-//         BankacctModel.find()
-//         .then( data => {
-//             res.status(200).send({
-//                 status: 200,
-//                 message: "Bank Accounts Loaded Successfully",
-//                 data: data
-//             });
-//         })
-//         .catch(err =>{
+// exports.getallBankacct = (req,res,next)=>{
+//     let page = parseInt(req.query.page) || 1;
+//     let limit = (parseInt(req.query.limit) > 100?100:parseInt(req.query.limit)) || 20;
+//     let search = req.query.q;
+//     let userId = req.user._id;
+//     let query = {};
+//     query.skip = limit * (page-1);
+//     query.limit = limit;
+//     let filterCriteria = {owned_by: userId};
+//     if(search) filterCriteria = {...filterCriteria,name: search};
+//     BankacctModel.find(filterCriteria,{},query).exec((err,data) =>{
+//         if (err){
 //             res.status(500).send({
 //                 status: 500,
-//                 message: "No Bank Accounts available for this user",
-//                 err: err
-//             })
-//         });
-// };
+//                 message: "An error occured",
+//                 error: err
+//             });
+//             return false;
+//         }
+//         res.status(200).send({
+//             status: 200,
+//             message: "Bank Account Loaded Successfully",
+//             data: data
+//         })
+//     })
+// }
+
+exports.getAllBankacct = (req,res,next)=>{
+        BankacctModel.find()
+        .then( data => {
+            res.status(200).send({
+                status: 200,
+                message: "Bank Accounts Loaded Successfully",
+                data: data
+            });
+        })
+        .catch(err =>{
+            res.status(500).send({
+                status: 500,
+                message: "No Bank Accounts available for this user",
+                err: err
+            })
+        });
+};
+
+exports.updateBankacct = (req, res, next) =>{
+    const bankacctId = req.params.id;
+    const acctupdate = req.body;
+    const userId = req.user._id;
+    acctupdate['date_modified'] = new Date();
+    BankacctModel.findOneAndUpdate({owned_by: userId,_id:bankacctId},{$set:update},{new:true,upsert:true})
+    .then((data) =>{
+        res.status(200).send({
+            status: 200,
+            message: "Bank details updated",
+            data: data
+        });
+    })
+    .catch((err)=>{
+        res.status(500).send({
+            status: 500,
+            message: " An error occurred"
+        });
+    });
+};

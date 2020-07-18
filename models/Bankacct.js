@@ -8,9 +8,6 @@ const autoIncrement = require('mongoose-auto-increment');
 // autoIncrement.initialize(mongoose.createConnection(config.dbUrl))
 
 const bankacctSchema = new Schema({
-    users: {
-        user: [{ userId: { type: Schema.Types.ObjectId}}]
-    },
     account_title: {
         type: String,
         required: true
@@ -37,8 +34,11 @@ const bankacctSchema = new Schema({
     },
     date_modified: {
         type: Date
+    },
+    owned_by: {
+        type: Number,
+        ref: 'User'
     }
-
 });
 // bankacctSchema.plugin(autoIncrement.plugin,{model: 'bankacctSchema', field: '_id',startAt:1,incrementBy:1});
 
