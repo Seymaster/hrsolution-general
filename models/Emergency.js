@@ -19,11 +19,11 @@ const emergencySchema = new Schema({
         required: true,
         default: false
     },
-    firstname: {
+    first_name: {
         type: String,
         required: true
     },
-    lastname: {
+    last_name: {
         type: String,
         required: true
     },
@@ -58,7 +58,8 @@ const emergencySchema = new Schema({
     country: {
         type: String,
         required: true
-    },    date_created: {
+    },    
+    date_created: {
         type: Date,
         default: Date.now
     },

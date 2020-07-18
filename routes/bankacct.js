@@ -2,7 +2,7 @@ const express  = require("express");
 const router   = express.Router();
 const bankacctController = require("../controllers/bankacct");
 
-// POST /all account
+// POST /saves account
 router.post("/bank-account", bankacctController.postBankacct);
 
 // GET / search for one `bank-account
