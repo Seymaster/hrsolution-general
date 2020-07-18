@@ -112,7 +112,7 @@ exports.deloneBankacct = (req, res, next) =>{
         }
         res.status(200).send({
             status:200,
-            message: `Bank details ${bankacctId} deleted`
+            message: `Bank details with id: ${bankacctId} deleted`
         });
     });
 

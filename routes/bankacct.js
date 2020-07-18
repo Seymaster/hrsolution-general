@@ -11,8 +11,8 @@ router.post("/bank-account", bankacctController.postBankacct);
 // GET / returns all bank accounts of a user
 router.get("/bank-account", bankacctController.getAllBankacct)
 
-// PATCH / Update a bank account of a user
-router.patch("/bank-account/:id", bankacctController.updateBankacct);
+// PUT / Update a bank account of a user
+router.put("/bank-account/:id", bankacctController.updateBankacct);
 
 // DELETE / Deletes a bank account of a user
 router.delete("/bank-account/:id", bankacctController.deloneBankacct)

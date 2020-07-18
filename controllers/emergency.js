@@ -49,3 +49,42 @@ exports.getallEmergency = (req,res,next)=>{
         })
     });
 };
+
+exports.updateEmergencycontact = (req, res, next) =>{
+    const emergeId = req.params.id;
+    const emergupdate = req.body;
+    emergupdate['date_modified'] = new Date();
+    EmergencyModel.findOneAndUpdate({_id:emergeId},{$set:emergupdate},{new:true,upsert:true})
+    .then((data) =>{
+        res.status(200).send({
+            status: 200,
+            message: "Emergency Contact updated",
+            data: data
+        });
+    })
+    .catch((err)=>{
+        res.status(500).send({
+            status: 500,
+            message: " An error occurred"
+        });
+    });
+};
+
+exports.deloneEmergencyContact = (req, res, next) =>{
+    const emergeId = req.params.id;
+    EmergencyModel.remove({_id:emergeId})
+    .exec((err,data) =>{
+        if (err) {
+            res.status(500).send({
+                status: 500,
+                message: "An error Occurred"
+            });
+            return false;
+        }
+        res.status(200).send({
+            status:200,
+            message: `Emergency Contact with id: ${emergeId} deleted`
+        });
+    });
+
+};

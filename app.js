@@ -32,9 +32,9 @@ mongoose.connect(config.dbUrl,
     console.log(err)
 });
 
-// app.use((req,res,next)=>{
-//     return res.status(500).send({
-//         status: 500,
-//         message: "Server Error"
-//     })
-// });
+app.use((req,res,next)=>{
+    return res.status(500).send({
+        status: 500,
+        message: "Server Error"
+    })
+});
