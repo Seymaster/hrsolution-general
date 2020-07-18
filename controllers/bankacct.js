@@ -81,9 +81,8 @@ exports.getAllBankacct = (req,res,next)=>{
 exports.updateBankacct = (req, res, next) =>{
     const bankacctId = req.params.id;
     const acctupdate = req.body;
-    const userId = req.user._id;
     acctupdate['date_modified'] = new Date();
-    BankacctModel.findOneAndUpdate({owned_by: userId,_id:bankacctId},{$set:update},{new:true,upsert:true})
+    BankacctModel.findOneAndUpdate({_id:bankacctId},{$set:acctupdate},{new:true,upsert:true})
     .then((data) =>{
         res.status(200).send({
             status: 200,
@@ -97,4 +96,24 @@ exports.updateBankacct = (req, res, next) =>{
             message: " An error occurred"
         });
     });
+};
+
+exports.deloneBankacct = (req, res, next) =>{
+    const bankacctId = req.params.id;
+    console.log(bankacctId)
+    BankacctModel.remove({_id:bankacctId})
+    .exec((err,data) =>{
+        if (err) {
+            res.status(500).send({
+                status: 500,
+                message: "An error Occurred"
+            });
+            return false;
+        }
+        res.status(200).send({
+            status:200,
+            message: `Bank details ${bankacctId} deleted`
+        });
+    });
+
 };

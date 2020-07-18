@@ -5,7 +5,7 @@ const Schema        = mongoose.Schema;
 const config        = require("../config/config");
 const autoIncrement = require('mongoose-auto-increment');
 
-// autoIncrement.initialize(mongoose.createConnection(config.dbUrl))
+// autoIncrement.initialize(mongoose.createConnection(config.dbUrl,{useUnifiedTopology: true, useNewUrlParser: true,useFindAndModify: false,useCreateIndex: true}))
 
 const bankacctSchema = new Schema({
     account_title: {
@@ -18,6 +18,7 @@ const bankacctSchema = new Schema({
     },
     account_number: {
         type: Number,
+        unique: true,
         require: true
     },
     bank_code: {
@@ -40,6 +41,7 @@ const bankacctSchema = new Schema({
         ref: 'User'
     }
 });
+
 // bankacctSchema.plugin(autoIncrement.plugin,{model: 'bankacctSchema', field: '_id',startAt:1,incrementBy:1});
 
 const BankacctModel = mongoose.model('Bankaccount', bankacctSchema)
