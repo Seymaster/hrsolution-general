@@ -3,6 +3,7 @@ const app           =  express();
 const PORT          =  process.env.PORT || 3000;
 const bankacctroute = require("./routes/bankacct");
 const emergencyroute= require("./routes/emergency")
+const languageroute = require("./routes/language")
 const config        = require("./config/config");
 const parser        = require("body-parser");
 const cors          = require("cors");
@@ -20,7 +21,8 @@ app.use(cors());
 app.use(parser.json());
 app.use(parser.urlencoded({extended: false}));
 app.use('/api/v1', bankacctroute);
-app.use('/api/v2', emergencyroute)
+app.use('/api/v2', emergencyroute);
+app.use('/api/v3', languageroute);
 
 mongoose.connect(config.dbUrl,
     {useUnifiedTopology: true, useNewUrlParser: true}

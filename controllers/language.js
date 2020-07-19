@@ -73,7 +73,7 @@ exports.updateLanguage = (req, res, next) =>{
 
 exports.deloneLanguage = (req, res, next) =>{
     const langId = req.params.id;
-    languageModel.remove({_id:langId})
+    LanguageModel.remove({_id:langId})
     .exec((err,data) =>{
         if (err) {
             res.status(500).send({

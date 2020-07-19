@@ -12,4 +12,6 @@ router.get("/language", languageController.getallLanguage);
 router.put("/language/:id", languageController.updateLanguage);
 
 // DELETE /Deletes a language
-router.delete("language/:id", languageController.deloneLanguage)
+router.delete("/language/:id", languageController.deloneLanguage)
+
+module.exports = router;
